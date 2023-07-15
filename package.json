@@ -1,0 +1,44 @@
+{
+  "name": "nodejs-mastering",
+  "version": "1.0.0",
+  "description": "learning",
+  "main": "index.js",
+  "scripts": {
+    "featurestest": "concurrently \"npm:test:js\" \"npm:test:db\"",
+    "featurestest:js": "concurrently \"npm:test1\" \"npm:test2\" \"npm:test3\"",
+    "featurestest:web": "npm run test:webservices",
+    "featurestest:db": "concurrently \"npm:test:postgres\" \"npm:test:redis\" \"npm:test:mongo\" \"npm:test:surreal\"",
+    "featurestest1": "node features/js/array.mjs | tap-spec",
+    "featurestest2": "node features/js/proxies-reflection.mjs | tap-spec",
+    "featurestest3": "node features/js/generators.mjs | tap-spec",
+    "featurestest:webservices": "node features/web/test.mjs | tap-spec",
+    "featurestest:redis": "node features/db/redis.mjs | tap-spec",
+    "featurestest:mongo": "node features/db/mongo.mjs | tap-spec",
+    "featurestest:surreal": "node features/db/surreal.mjs | tap-spec",
+    "start:postgres": "docker run --name postgres-local -p 5432:5432 -e POSTGRES_PASSWORD=mysecretpassword -e POSTGRES_DB=localdb -d postgres",
+    "stop:postgres": "sudo docker stop postgres-local && sudo docker rm postgres-local",
+    "start:redis": "sudo docker run -d --name redis-stack-server -p 6379:6379 redis/redis-stack-server:latest",
+    "stop:redis": "sudo docker stop redis-stack-server && sudo docker rm redis-stack-server",
+    "start:mongo": "sudo docker run -d --name mongo -p 27017:27017 mongo:4.4.6",
+    "stop:mongo": "sudo docker stop mongo && sudo docker rm mongo",
+    "start:surreal": "sudo docker run -d --rm --name surrealdb -p 127.0.0.1:8000:8000 surrealdb/surrealdb:latest start --log trace --user root --pass root memory",
+    "stop:surreal": "sudo docker stop surrealdb && docker rm surrealdb"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "@types/core-js": "^2.5.5",
+    "concurrently": "^7.6.0",
+    "tap-spec": "^5.0.0"
+  },
+  "dependencies": {
+    "core-js": "^3.24.1",
+    "express": "^4.18.2",
+    "fastify": "^4.10.2",
+    "mongodb": "^4.13.0",
+    "postgres": "^3.3.2",
+    "redis": "^4.5.1",
+    "surrealdb.js": "^0.5.0"
+  }
+}
